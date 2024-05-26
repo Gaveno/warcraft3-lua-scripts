@@ -9,17 +9,17 @@ function ProcessAIForPlayersEvent()
 end
 
 function ProcessAIOrderForPlayer(playerIndex)
-    print("Processing AI for player" .. playerIndex)
+    -- print("Processing AI for player" .. playerIndex)
 
     if humanBuildPriorities[playerAIOrders[playerIndex]] == nil then
         return
     end
 
     local orderType = humanBuildPriorities[playerAIOrders[playerIndex]].type
-    print("Order type: " .. orderType)
+    -- print("Order type: " .. orderType)
 
     if orderType == "worker" then
-        print("Processing worker order type")
+        -- print("Processing worker order type")
 
         if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_GOLD) >= GetUnitGoldCost(FourCC("nvlk")) then
             IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("nvlk"))
@@ -29,7 +29,7 @@ function ProcessAIOrderForPlayer(playerIndex)
     end
 
     if orderType == "building" then
-        print("Processing building order type")
+        -- print("Processing building order type")
 
         if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_GOLD) >= GetUnitGoldCost(FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building)) and
            GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_LUMBER) >= GetUnitWoodCost(FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building)) then
@@ -40,7 +40,7 @@ function ProcessAIOrderForPlayer(playerIndex)
             end))
 
             ForGroup(commanderGroup, function()
-                print("Issuing build order for commander")
+                -- print("Issuing build order for commander")
 
                 IssueBuildOrderById(
                     GetEnumUnit(),
@@ -57,8 +57,18 @@ function ProcessAIOrderForPlayer(playerIndex)
 
     if orderType == "upgrade" then
         print("Processing upgrade order type")
+        local currentLevel = GetPlayerTechCountSimple(FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].upgrade), Player(playerIndex - 1))
+        local upgradeFrom = humanBuildPriorities[playerAIOrders[playerIndex]].level
 
-        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].upgrade))
+        print("Current count p" .. playerIndex .. ": " .. currentLevel)
+        print("Upgrade from: " .. upgradeFrom)
+        if currentLevel == upgradeFrom then
+            print("Order upgrade for player: " .. playerIndex)
+            IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].upgrade))
+        else
+            print("Increment order for player: " .. playerIndex)
+            playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+        end
             -- playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
         return
     end

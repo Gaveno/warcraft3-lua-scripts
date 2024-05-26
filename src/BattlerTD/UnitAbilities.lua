@@ -146,13 +146,13 @@ function GroupPickRandomUnitCustom(whichGroup)
 	--  the flag, in case it is used again in the callback.
 
 	bj_groupRandomConsidered = 0
-	bj_groupRandomCurrentPick = nil
+	bj_groupRandomCurrentPick = -1
 	ForGroup(whichGroup, GroupPickRandomUnitEnum)
 
 	--  If the user wants the group destroyed, do so now.
 	DestroyGroup(whichGroup)
 
-    if bj_groupRandomCurrentPick ~= nil then
+    if bj_groupRandomCurrentPick ~= -1 then
 	    return bj_groupRandomCurrentPick
     end
     

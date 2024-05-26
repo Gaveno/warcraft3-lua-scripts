@@ -135,7 +135,8 @@ function InitializeAI()
         {["type"] = "worker"},
         {
             ["type"] = "upgrade",
-            ["upgrade"] = "Rhan" -- Child Speed
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 0
         },
         {
             ["type"] = "building",
@@ -154,7 +155,177 @@ function InitializeAI()
         {["type"] = "worker"},
         {
             ["type"] = "upgrade",
-            ["upgrade"] = "Rhan" -- Child Speed
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 1
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h003:hhou" -- Footman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h003:hhou" -- Footman
+        },
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 2
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 3
+        },
+        {["type"] = "worker"},
+        {
+            ["type"] = "building",
+            ["building"] = "h005:hhou" -- Priest
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 4
+        },
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 5
+        },
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 6
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 7
+        },
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan", -- Child Speed
+            ["level"] = 8
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
         },
     }
 
