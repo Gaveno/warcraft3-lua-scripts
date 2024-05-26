@@ -4,6 +4,8 @@ function InitializeScripts()
     round = 1
     playerUnitsArray = {}
     playerMilkMaids = {}
+    playerBaseBuildings = {}
+    playerBuildAreas = {}
 
     maxNumberBuildings = 50
 
@@ -26,6 +28,7 @@ function InitializeScripts()
             -- Base Building
             print("Creating base building")
             local playerBase = CreateUnitAtLoc(Player(player - 1), FourCC("etrp"), playerLoc, 270)
+            playerBaseBuildings[player] = playerBase
 
             local trigger = CreateTrigger()
             TriggerRegisterUnitInRangeSimple(trigger, 150, playerBase)
@@ -39,8 +42,10 @@ function InitializeScripts()
             print("Creating first child")
             local child = CreateUnitAtLoc(Player(player - 1), FourCC("nvlk"), playerLoc, 270)
 
+            -- Start AI
+            -- StartAIForPlayer(player - 1)
+
             -- Milk Maids
-            
             local playerX = GetLocationX(playerLoc)
             local playerY = GetLocationY(playerLoc)
             local xSign = 1
@@ -58,7 +63,7 @@ function InitializeScripts()
             
             for j = 1, 5 do
                 -- Spawn Milk Maid
-                playerMilkMaids[player][j] = CreateUnit(Player(player - 1), FourCC("nvlw"), points[j].x, points[j].y, 90 - 90 * xSign)
+                playerMilkMaids[player][j] = CreateUnit(Player(player - 1), FourCC("nvlw"), points[j].x, points[j].y, 90 + 90 * xSign)
                 
                 local trig = CreateTrigger()
                 TriggerRegisterUnitInRangeSimple(trig, 80, playerMilkMaids[player][j])
@@ -67,6 +72,9 @@ function InitializeScripts()
 
             -- Get initial milk harvesting started
             IssuePointOrderLoc(child, "move", GetUnitLoc(playerMilkMaids[player][1]))
+
+            -- Define build areas
+            playerBuildAreas[player] = Rect(playerX - 100 * xSign, PlayerY - 767, playerX - 1278 * xSign, PlayerY + 767)
         end
     end
 
@@ -103,3 +111,11 @@ function CreateCommanderForPlayer(playerIndex)
         CreateUnitAtLoc(Player(playerIndex), FourCC("u000:uaco"), playerLoc, 270)
     end
 end
+
+-- function StartAIForPlayer(playerIndex)
+--     if GetPlayerController(Player(playerIndex)) == MAP_CONTROL_COMPUTER then
+--         if GetPlayerRace(Player(playerIndex)) == RACE_HUMAN then
+--             StartCampaignAI(Player(playerIndex), "HumanBattler.ai")
+--         end
+--     end
+-- end

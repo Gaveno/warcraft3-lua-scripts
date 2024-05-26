@@ -98,12 +98,12 @@ function UnitAbilitiesEvent()
             -- Defensive skill
             pcall(function()
                 print("Attempting defensive ability on unit target")
-                IssuePointOrderByIdLoc(witchDoc, OrderId(abilityUnitTypeToCastType[GetUnitTypeID(witchDoc)].allyAttackedGround), GetUnitLoc(attacked))
+                IssuePointOrderByIdLoc(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeID(witchDoc)]].allyAttackedGround), GetUnitLoc(attacked))
             end)
 
             pcall(function()
                 print("Attempting defensive ability on unit target")
-                IssueTargetOrderById(witchDoc, OrderId(abilityUnitTypeToCastType[GetUnitTypeID(witchDoc)].allyAttackedUnit), attacked)
+                IssueTargetOrderById(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeID(witchDoc)]].allyAttackedUnit), attacked)
             end)
         end
     end
