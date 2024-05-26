@@ -24,7 +24,10 @@ function ProcessAIOrderForPlayer(playerIndex)
     if orderType == "worker" then
         if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_GOLD) >= GetUnitGoldCost(FourCC("nvlk")) then
             if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_FOOD_USED) < GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_FOOD_CAP) then
-                IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("nvlk"))
+                local res = IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("nvlk"))
+                if res == true then
+                    playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+                end
             else
                 playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
             end
@@ -41,16 +44,31 @@ function ProcessAIOrderForPlayer(playerIndex)
                 return com == FourCC("u000:uaco") or com == FourCC("uaco") or (IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) and com ~= FourCC("etrp"))
             end))
 
+            foundBuilder = false
             ForGroup(commanderGroup, function()
-                if IssueBuildOrderById(
-                    GetEnumUnit(),
-                    FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building),
-                    GetRandomInt(GetRectMinX(playerBuildAreas[playerIndex]), GetRectMaxX(playerBuildAreas[playerIndex])),
-                    GetRandomInt(GetRectMinY(playerBuildAreas[playerIndex]), GetRectMaxY(playerBuildAreas[playerIndex]))
-                ) == false then
-                    IssueImmediateOrderById(GetEnumUnit(), FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building))
+                if foundBuilder == false then
+                    local res = IssueBuildOrderById(
+                        GetEnumUnit(),
+                        FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building),
+                        GetRandomInt(GetRectMinX(playerBuildAreas[playerIndex]), GetRectMaxX(playerBuildAreas[playerIndex])),
+                        GetRandomInt(GetRectMinY(playerBuildAreas[playerIndex]), GetRectMaxY(playerBuildAreas[playerIndex]))
+                    )
+
+                    if res == false then
+                        local secondRes = IssueImmediateOrderById(GetEnumUnit(), FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building))
+
+                        if res == true then
+                            foundBuilder = true
+                        end
+                    else
+                        foundBuilder = true
+                    end
                 end
             end)
+
+            if foundBuilder == true then
+                playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+            end
         end
         return
     end
@@ -60,7 +78,10 @@ function ProcessAIOrderForPlayer(playerIndex)
         local upgradeFrom = humanBuildPriorities[playerAIOrders[playerIndex]].level
 
         if currentLevel == upgradeFrom then
-            IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].upgrade))
+            local res = IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].upgrade))
+            if res == true then
+                playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+            end
         else
             playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
         end

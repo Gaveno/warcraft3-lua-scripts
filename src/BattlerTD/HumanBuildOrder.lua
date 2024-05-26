@@ -137,6 +137,9 @@ function InitializeHumanAI()
             ["upgrade"] = "Rhan", -- Child Speed
             ["level"] = 6
         },
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {["type"] = "worker"},
         {
             ["type"] = "building",
             ["building"] = "h008:hhou" -- Gryphon Rider
@@ -296,6 +299,38 @@ function InitializeHumanAI()
         {
             ["type"] = "building",
             ["building"] = "h004:hhou" -- Rifleman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h008:hhou" -- Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h009:hhou" -- Storm Hammers Gryphon Rider
         },
     }
 

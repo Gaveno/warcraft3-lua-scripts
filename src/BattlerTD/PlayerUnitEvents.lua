@@ -1,6 +1,5 @@
 -- Player builds a unit
 function AddBuildingToPlayer()
-    -- print("A player built a unit")
     local unit = GetConstructingStructure()
     local player = GetPlayerId(GetOwningPlayer(unit)) + 1
 
@@ -11,8 +10,6 @@ function AddBuildingToPlayer()
             playerUnitsArray[player][unitIndex].point = GetUnitLoc(unit)
 
             SetUnitUserData(unit, unitIndex)
-            -- print("Unit took slot: ")
-            -- print(unitIndex)
             break
         end
     end
@@ -225,7 +222,7 @@ end
 function MoveAttackAllUnitsToEnemyBase()
     local units = GetUnitsInRectMatching(GetEntireMapRect(), Condition(function()
         local unit = GetFilterUnit()
-        return GetOwningPlayer(unit) == Player(6) or GetOwningPlayer(unit) == Player(7)
+        return (GetOwningPlayer(unit) == Player(6) or GetOwningPlayer(unit) == Player(7)) and GetUnitCurrentOrder(unit) ~= OrderId("attack")
     end))
 
     ForGroup(units, function()
@@ -242,11 +239,9 @@ end
 
 -- All attacking units have died
 function SpawnPlayersBuildings()
-    print("A unit died")
     local unit = GetDyingUnit()
 
     if GetOwningPlayer(unit) == Player(6) or GetOwningPlayer(unit) == Player(7) then
-        print("Unit belongs to attacker group")
         -- Unit bounty
         local killingPlayer = GetOwningPlayer(GetKillingUnit())
         local mult = 1
@@ -279,11 +274,7 @@ function SpawnPlayersBuildings()
         local attackerGroup1 = GetUnitsOfPlayerMatching(Player(6), Condition(CheckAlive))
         local attackerGroup2 = GetUnitsOfPlayerMatching(Player(7), Condition(CheckAlive))
 
-        print("Attacker group 1 size " .. BlzGroupGetSize(attackerGroup1))
-        print("Attacker group 2 size " .. BlzGroupGetSize(attackerGroup2)) 
-
         if BlzGroupGetSize(attackerGroup1) + BlzGroupGetSize(attackerGroup2) <= 0 and TimerGetRemaining(udg_roundTimer) <= 0 then
-            print("Attacker groups are empty")
 
             RemoveLocustFromCommanders()
             StartTimerBJ(udg_roundTimer, false, 30)
@@ -337,8 +328,6 @@ function UpgradingUnit()
     playerUnitsArray[player][unitIndex].point = GetUnitLoc(unit)
 
     SetUnitUserData(unit, unitIndex)
-    print("Unit took slot: ")
-    print(unitIndex)
 end
 
 ------------------------------
