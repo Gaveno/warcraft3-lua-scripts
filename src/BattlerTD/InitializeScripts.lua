@@ -1,6 +1,8 @@
 function InitializeScripts()
     print("Initializing")
 
+    InitializeAI()
+
     round = 1
     playerUnitsArray = {}
     playerMilkMaids = {}
@@ -74,7 +76,7 @@ function InitializeScripts()
             IssuePointOrderLoc(child, "move", GetUnitLoc(playerMilkMaids[player][1]))
 
             -- Define build areas
-            playerBuildAreas[player] = Rect(playerX - 100 * xSign, PlayerY - 767, playerX - 1278 * xSign, PlayerY + 767)
+            playerBuildAreas[player] = Rect(playerX - 100 * xSign, playerY - 767, playerX - 1278 * xSign, playerY + 767)
         end
     end
 
@@ -119,3 +121,44 @@ end
 --         end
 --     end
 -- end
+
+function InitializeAI()
+    humanBuildPriorities = {
+        {["type"] = "worker"}, -- Child
+        {["type"] = "worker"},
+        {
+            ["type"] = "building",
+            ["building"] = "h003:hhou" -- Footman
+        },
+        {["type"] = "worker"},
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan" -- Child Speed
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h003:hhou" -- Footman
+        },
+        {
+            ["type"] = "building",
+            ["building"] = "h004:hhou" -- Rifleman
+        },
+        {["type"] = "worker"},
+        {["type"] = "worker"},
+        {
+            ["type"] = "building",
+            ["building"] = "h005:hhou" -- Priest
+        },
+        {["type"] = "worker"},
+        {
+            ["type"] = "upgrade",
+            ["upgrade"] = "Rhan" -- Child Speed
+        },
+    }
+
+    playerAIOrders = {}
+
+    for player = 1, 6 do
+        playerAIOrders[player] = 1
+    end
+end
