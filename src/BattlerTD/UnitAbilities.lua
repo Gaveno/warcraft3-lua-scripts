@@ -91,7 +91,7 @@ function UnitAbilitiesEvent()
         end)
     )
 
-    local witchDoc = GroupPickRandomUnit(witchDocs)
+    local witchDoc = GroupPickRandomUnitCustom(witchDocs)
 
     if witchDoc ~= nil then
         if abilityUnitTypeToCastType[GetUnitTypeID(witchDoc)] ~= nil then
@@ -119,4 +119,38 @@ function GetLane(y)
         end
     end
     return -1
+end
+
+-- ===========================================================================
+
+--  Consider each unit, one at a time, keeping a "current pick".   Once all units
+--  are considered, this "current pick" will be the resulting random unit.
+--
+--  The chance of picking a given unit over the "current pick" is 1/N, where N is
+--  the number of units considered thusfar (including the current consideration).
+--
+function GroupPickRandomUnitEnumCustom()
+	bj_groupRandomConsidered = bj_groupRandomConsidered + 1
+	if (GetRandomInt(1, bj_groupRandomConsidered) == 1) then
+		bj_groupRandomCurrentPick = GetEnumUnit()
+	end
+end
+
+-- ===========================================================================
+
+--  Picks a random unit from a group.
+---@param whichGroup group
+---@return unit
+function GroupPickRandomUnitCustom(whichGroup)
+	--  If the user wants the group destroyed, remember that fact and clear
+	--  the flag, in case it is used again in the callback.
+
+	bj_groupRandomConsidered = 0
+	bj_groupRandomCurrentPick = nil
+	ForGroup(whichGroup, GroupPickRandomUnitEnum)
+
+	--  If the user wants the group destroyed, do so now.
+	DestroyGroup(whichGroup)
+
+	return bj_groupRandomCurrentPick
 end

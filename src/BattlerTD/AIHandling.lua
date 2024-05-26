@@ -1,8 +1,10 @@
 function ProcessAIForPlayersEvent()
     for player = 1, 6 do
+        if GetPlayerSlotState(Player(player - 1)) == PLAYER_SLOT_STATE_PLAYING and GetPlayerController(Player(player - 1)) == MAP_CONTROL_COMPUTER then
         -- if GetPlayerController(Player(player)) == MAP_CONTROL_COMPUTER then
             ProcessAIOrderForPlayer(player)
         -- end
+        end
     end
 end
 
