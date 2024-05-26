@@ -109,9 +109,9 @@ function CreateCommanderForPlayer(playerIndex)
     if GetPlayerSlotState(Player(playerIndex)) == PLAYER_SLOT_STATE_PLAYING then
         local playerLoc = GetPlayerStartLocationLoc(Player(playerIndex))
         if GetPlayerRace(Player(playerIndex)) == RACE_HUMAN then
-            CreateUnitAtLoc(Player(playerIndex), FourCC("uaco"), playerLoc, 270)
+            CreateUnit(Player(playerIndex), FourCC("uaco"), GetLocationX(playerLoc) + 200, GetLocationY(playerLoc), math.floor(playerIndex / 3) * 180)
         else
-            CreateUnitAtLoc(Player(playerIndex), FourCC("u000:uaco"), playerLoc, 270)
+            CreateUnit(Player(playerIndex), FourCC("u000:uaco"), GetLocationX(playerLoc) + 200, GetLocationY(playerLoc), 0)
         end
     end
 end

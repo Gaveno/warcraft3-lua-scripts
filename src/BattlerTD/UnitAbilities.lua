@@ -22,9 +22,9 @@ function UnitAbilitiesWitchDoctorEvent()
     local witchDocs = GetUnitsInRectMatching(
         Rect(
             GetRectMinX(mapRect),
-            GetPlayerStartLocationY(Player(lane)) - 892,
+            GetPlayerStartLocationY(Player(lane - 1)) - 892,
             GetRectMaxX(mapRect),
-            GetPlayerStartLocationY(Player(lane)) + 892
+            GetPlayerStartLocationY(Player(lane - 1)) + 892
         ),
         Condition(function()
             local unitType = GetUnitTypeId(GetFilterUnit())
@@ -73,9 +73,9 @@ function UnitAbilitiesEvent()
     local witchDocs = GetUnitsInRectMatching(
         Rect(
             GetRectMinX(mapRect),
-            GetPlayerStartLocationY(Player(lane)) - 892,
+            GetPlayerStartLocationY(Player(lane - 1)) - 892,
             GetRectMaxX(mapRect),
-            GetPlayerStartLocationY(Player(lane)) + 892
+            GetPlayerStartLocationY(Player(lane - 1)) + 892
         ),
         Condition(function()
             local unitType = GetUnitTypeId(GetFilterUnit())
@@ -115,7 +115,7 @@ function GetLane(y)
     -- Returns lane in range 1-3
     for player = 1,3 do
         if y > GetPlayerStartLocationY(Player(player - 1)) - 892 and y < GetPlayerStartLocationY(Player(player - 1)) + 892 then
-            return player - 1
+            return player
         end
     end
     return -1

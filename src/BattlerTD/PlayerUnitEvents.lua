@@ -83,6 +83,8 @@ function ReplacePlayersUnits()
     else
         StartTimerBJ(udg_roundTimer, false, 30)
     end
+
+    MoveAttackAllUnitsToEnemyBase()
 end
 
 function GetSpawnUnitType(unitType)
@@ -218,8 +220,6 @@ function SpawnPlayersUnits(player)
             end
         end
     end
-
-    MoveAttackAllUnitsToEnemyBase()
 end
 
 function MoveAttackAllUnitsToEnemyBase()
@@ -230,12 +230,12 @@ function MoveAttackAllUnitsToEnemyBase()
 
     ForGroup(units, function()
         local unit = GetEnumUnit()
-        local player = GetOwningPlayer(unit)
-        local playerId = GetPlayerId(player) + 1
+        local lane = GetLane(GetLocationY(GetUnitLoc(unit)))
+
         if GetOwningPlayer(unit) == Player(6) then
-            IssuePointOrder(unit, "attack", 2040, GetLocationY(GetUnitLoc(playerBaseBuildings[playerId])))
+            IssuePointOrder(unit, "attack", 2040, GetLocationY(GetUnitLoc(playerBaseBuildings[lane])))
         else 
-            IssuePointOrder(unit, "attack", -2040, GetLocationY(GetUnitLoc(playerBaseBuildings[playerId])))
+            IssuePointOrder(unit, "attack", -2040, GetLocationY(GetUnitLoc(playerBaseBuildings[lane])))
         end
     end)
 end
