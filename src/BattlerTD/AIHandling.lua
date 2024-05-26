@@ -60,6 +60,12 @@ function ProcessAIOrderForPlayer(playerIndex)
         end
         return
     end
+
+    -- Base upgrades
+    if GetPlayerState(GetOwningPlayer(unit), PLAYER_STATE_RESOURCE_GOLD) > 200 and TimerGetRemaining(udg_roundTimer) > 0 then
+        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Resw"))
+        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Rerh"))
+    end
 end
 
 function IncrementAIOrderEvent(player)

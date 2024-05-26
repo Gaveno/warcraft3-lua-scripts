@@ -22,11 +22,11 @@ function InitializeHumanAI()
         },
         {["type"] = "worker"},
         {["type"] = "worker"},
-        {
-            ["type"] = "upgrade",
-            ["upgrade"] = "Resw", -- Base Attack
-            ["level"] = 0
-        },
+        -- {
+        --     ["type"] = "upgrade",
+        --     ["upgrade"] = "Resw", -- Base Attack
+        --     ["level"] = 0
+        -- },
         {
             ["type"] = "building",
             ["building"] = "h005:hhou" -- Priest
@@ -45,11 +45,11 @@ function InitializeHumanAI()
             ["type"] = "building",
             ["building"] = "h003:hhou" -- Footman
         },
-        {
-            ["type"] = "upgrade",
-            ["upgrade"] = "Resw", -- Base Attack
-            ["level"] = 1
-        },
+        -- {
+        --     ["type"] = "upgrade",
+        --     ["upgrade"] = "Resw", -- Base Attack
+        --     ["level"] = 1
+        -- },
         {
             ["type"] = "upgrade",
             ["upgrade"] = "Rhan", -- Child Speed
@@ -68,11 +68,11 @@ function InitializeHumanAI()
             ["level"] = 3
         },
         {["type"] = "worker"},
-        {
-            ["type"] = "upgrade",
-            ["upgrade"] = "Rerh", -- Base Health
-            ["level"] = 0
-        },
+        -- {
+        --     ["type"] = "upgrade",
+        --     ["upgrade"] = "Rerh", -- Base Health
+        --     ["level"] = 0
+        -- },
         {
             ["type"] = "building",
             ["building"] = "h005:hhou" -- Priest
@@ -92,11 +92,11 @@ function InitializeHumanAI()
         {["type"] = "worker"},
         {["type"] = "worker"},
         {["type"] = "worker"},
-        {
-            ["type"] = "upgrade",
-            ["upgrade"] = "Rerh", -- Base Health
-            ["level"] = 1
-        },
+        -- {
+        --     ["type"] = "upgrade",
+        --     ["upgrade"] = "Rerh", -- Base Health
+        --     ["level"] = 1
+        -- },
         {["type"] = "worker"},
         {
             ["type"] = "building",
@@ -149,11 +149,11 @@ function InitializeHumanAI()
             ["type"] = "building",
             ["building"] = "h004:hhou" -- Rifleman
         },
-        {
-            ["type"] = "upgrade",
-            ["upgrade"] = "Resw", -- Base Attack
-            ["level"] = 2
-        },
+        -- {
+        --     ["type"] = "upgrade",
+        --     ["upgrade"] = "Resw", -- Base Attack
+        --     ["level"] = 2
+        -- },
         {
             ["type"] = "building",
             ["building"] = "h004:hhou" -- Rifleman
@@ -196,11 +196,11 @@ function InitializeHumanAI()
             ["type"] = "building",
             ["building"] = "h008:hhou" -- Gryphon Rider
         },
-        {
-            ["type"] = "upgrade",
-            ["upgrade"] = "Rerh", -- Base Health
-            ["level"] = 2
-        },
+        -- {
+        --     ["type"] = "upgrade",
+        --     ["upgrade"] = "Rerh", -- Base Health
+        --     ["level"] = 2
+        -- },
         {
             ["type"] = "building",
             ["building"] = "h008:hhou" -- Gryphon Rider
