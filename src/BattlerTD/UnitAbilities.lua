@@ -45,6 +45,8 @@ end
 ---------------------------
 -- Unit Ability Triggers
 function UnitAbilitiesEvent()
+    debugUnitAbilitiesEvent = false
+
     local attacker      = GetAttacker()
     local attackerType  = GetUnitTypeId(attacker)
     local attacked      = GetTriggerUnit()
@@ -56,13 +58,13 @@ function UnitAbilitiesEvent()
 
         -- Target ground
         pcall(function()
-            print("Attempting ability on ground target")
+            printD("Attempting ability on ground target", debugUnitAbilitiesEvent)
             IssuePointOrderByIdLoc(attacker, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[attackerType]].attackingGround[isBase]), GetUnitLoc(attacked))
         end)
 
         -- Target the unit
         pcall(function()
-            print("Attempting ability on unit target")
+            printD("Attempting ability on unit target", debugUnitAbilitiesEvent)
             IssueTargetOrderById(attacker, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[attackerType]].attackingUnit[isBase]), attacked)
         end)
     end
@@ -97,12 +99,12 @@ function UnitAbilitiesEvent()
         if abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)] ~= nil then
             -- Defensive skill
             pcall(function()
-                print("Attempting defensive ability on unit target")
+                printD("Attempting defensive ability on unit target", debugUnitAbilitiesEvent)
                 IssuePointOrderByIdLoc(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)]].allyAttackedGround), GetUnitLoc(attacked))
             end)
 
             pcall(function()
-                print("Attempting defensive ability on unit target")
+                printD("Attempting defensive ability on unit target", debugUnitAbilitiesEvent)
                 IssueTargetOrderById(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)]].allyAttackedUnit), attacked)
             end)
         end

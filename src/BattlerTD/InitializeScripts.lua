@@ -115,3 +115,11 @@ function CreateCommanderForPlayer(playerIndex)
         end
     end
 end
+
+function printD(str, debugVar)
+    if debugVar == nil or debugVar == false then
+        return
+    end
+
+    print(str)
+end

@@ -9,6 +9,8 @@ function ProcessAIForPlayersEvent()
 end
 
 function ProcessAIOrderForPlayer(playerIndex)
+    debugAIOrder = true
+    printD("Build order for player " .. playerIndex .. " before " .. playerAIOrders[playerIndex], debugAIOrder)
     -- Base upgrades
     if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_GOLD) > 200 and TimerGetRemaining(udg_roundTimer) <= 0 then
         IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Resw"))
@@ -87,6 +89,8 @@ function ProcessAIOrderForPlayer(playerIndex)
         end
         return
     end
+
+    printD("Build order for player " .. playerIndex .. " after " .. playerAIOrders[playerIndex], debugAIOrder)
 end
 
 function IncrementAIOrderEvent(player)
