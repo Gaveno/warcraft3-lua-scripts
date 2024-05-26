@@ -94,16 +94,16 @@ function UnitAbilitiesEvent()
     local witchDoc = GroupPickRandomUnitCustom(witchDocs)
 
     if witchDoc ~= nil then
-        if abilityUnitTypeToCastType[GetUnitTypeID(witchDoc)] ~= nil then
+        if abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)] ~= nil then
             -- Defensive skill
             pcall(function()
                 print("Attempting defensive ability on unit target")
-                IssuePointOrderByIdLoc(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeID(witchDoc)]].allyAttackedGround), GetUnitLoc(attacked))
+                IssuePointOrderByIdLoc(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)]].allyAttackedGround), GetUnitLoc(attacked))
             end)
 
             pcall(function()
                 print("Attempting defensive ability on unit target")
-                IssueTargetOrderById(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeID(witchDoc)]].allyAttackedUnit), attacked)
+                IssueTargetOrderById(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)]].allyAttackedUnit), attacked)
             end)
         end
     end
@@ -152,5 +152,9 @@ function GroupPickRandomUnitCustom(whichGroup)
 	--  If the user wants the group destroyed, do so now.
 	DestroyGroup(whichGroup)
 
-	return bj_groupRandomCurrentPick
+    if bj_groupRandomCurrentPick ~= nil then
+	    return bj_groupRandomCurrentPick
+    end
+    
+    return nil
 end
