@@ -9,6 +9,12 @@ function ProcessAIForPlayersEvent()
 end
 
 function ProcessAIOrderForPlayer(playerIndex)
+    -- Base upgrades
+    if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_GOLD) > 200 and TimerGetRemaining(udg_roundTimer) <= 0 then
+        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Resw"))
+        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Rerh"))
+    end
+
     if humanBuildPriorities[playerAIOrders[playerIndex]] == nil then
         return
     end
@@ -59,12 +65,6 @@ function ProcessAIOrderForPlayer(playerIndex)
             playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
         end
         return
-    end
-
-    -- Base upgrades
-    if GetPlayerState(GetOwningPlayer(unit), PLAYER_STATE_RESOURCE_GOLD) > 200 and TimerGetRemaining(udg_roundTimer) > 0 then
-        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Resw"))
-        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Rerh"))
     end
 end
 

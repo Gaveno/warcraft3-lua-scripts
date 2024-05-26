@@ -230,10 +230,12 @@ function MoveAttackAllUnitsToEnemyBase()
 
     ForGroup(units, function()
         local unit = GetEnumUnit()
+        local player = GetOwningPlayer(unit)
+        local playerId = GetPlayerId(player) + 1
         if GetOwningPlayer(unit) == Player(6) then
-            IssuePointOrder(unit, "attack", 2040, GetLocationY(GetUnitLoc(unit)))
+            IssuePointOrder(unit, "attack", 2040, GetLocationY(GetUnitLoc(playerBaseBuildings[playerId])))
         else 
-            IssuePointOrder(unit, "attack", -2040, GetLocationY(GetUnitLoc(unit)))
+            IssuePointOrder(unit, "attack", -2040, GetLocationY(GetUnitLoc(playerBaseBuildings[playerId])))
         end
     end)
 end
