@@ -93,13 +93,27 @@ function InitializeScripts()
             attackingUnit = {
                 [false] = "lightningshield" -- Is NOT Base
             }
+        },
+        priest = {
+            attackingUnit = {
+                [false] = "dispel"
+            },
+            allyAttackedUnit = "innerfire"
+        },
+        sorceress = {
+            attackingUnit = {
+                [false] = "polymorph"
+            }
         }
     }
 
     abilityUnitTypeToCastType = {
         [FourCC("odoc")] = "witchDoctor",
         [FourCC("o000:odoc")] = "witchDoctor",
-        [FourCC("o007:odoc")] = "witchDoctor"
+        [FourCC("o007:odoc")] = "witchDoctor",
+        [FourCC("h00G:hhou")] = "priest",
+        [FourCC("h00H:hhou")] = "priest",
+        [FourCC("h00I:hsor")] = "sorceress"
     }
 
     print("Finished Initialization")
