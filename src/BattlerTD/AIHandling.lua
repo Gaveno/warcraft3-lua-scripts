@@ -13,8 +13,16 @@ function ProcessAIOrderForPlayer(playerIndex)
     printD("Build order for player " .. playerIndex .. " before " .. playerAIOrders[playerIndex], debugAIOrder)
     -- Base upgrades
     if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_GOLD) > 200 and TimerGetRemaining(udg_roundTimer) <= 0 then
-        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Resw"))
-        IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Rerh"))
+        local pick = GetRandomInt(0, 100)
+        if pick < 25 then
+            IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Resw"))
+        elseif pick < 50 then
+            IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Rerh"))
+        elseif pick < 75 and GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_FOOD_USED) < GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_FOOD_CAP) then
+            IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("nvlk"))
+        else
+            IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("Rhan"))
+        end
     end
 
     if humanBuildPriorities[playerAIOrders[playerIndex]] == nil then
@@ -29,17 +37,19 @@ function ProcessAIOrderForPlayer(playerIndex)
                 local res = IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC("nvlk"))
                 if res == true then
                     playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+                    return
                 end
             else
                 playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+                return
             end
         end
-        return
     end
 
     if orderType == "building" then
         if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_GOLD) >= GetUnitGoldCost(FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building)) and
-           GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_LUMBER) >= GetUnitWoodCost(FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building)) then
+           GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_LUMBER) >= GetUnitWoodCost(FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building)) and
+           TimerGetRemaining(udg_roundTimer) > 0 then
 
             local commanderGroup = GetUnitsOfPlayerMatching(Player(playerIndex - 1), Condition(function()
                 local com = GetUnitTypeId(GetFilterUnit())
@@ -58,8 +68,7 @@ function ProcessAIOrderForPlayer(playerIndex)
 
                     if res == false then
                         local secondRes = IssueImmediateOrderById(GetEnumUnit(), FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building))
-
-                        if res == true then
+                        if secondRes == true then
                             foundBuilder = true
                         end
                     else
@@ -68,11 +77,13 @@ function ProcessAIOrderForPlayer(playerIndex)
                 end
             end)
 
-            if foundBuilder == true then
-                playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+            playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+
+            if foundBuilder == false then
+                ProcessAIOrderForPlayer(playerIndex)
             end
+            return 
         end
-        return
     end
 
     if orderType == "upgrade" then
@@ -83,16 +94,15 @@ function ProcessAIOrderForPlayer(playerIndex)
             local res = IssueImmediateOrderById(playerBaseBuildings[playerIndex], FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].upgrade))
             if res == true then
                 playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+                return
             end
         else
             playerAIOrders[playerIndex] = playerAIOrders[playerIndex] + 1
+            return
         end
-        return
     end
-
-    printD("Build order for player " .. playerIndex .. " after " .. playerAIOrders[playerIndex], debugAIOrder)
 end
 
 function IncrementAIOrderEvent(player)
     playerAIOrders[GetPlayerId(player) + 1] = playerAIOrders[GetPlayerId(player) + 1] + 1
-end GetOwningPlayer(GetTriggerUnit())
+end
