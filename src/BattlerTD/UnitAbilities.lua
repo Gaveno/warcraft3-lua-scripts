@@ -45,8 +45,6 @@ end
 ---------------------------
 -- Unit Ability Triggers
 function UnitAbilitiesEvent()
-    debugUnitAbilitiesEvent = false
-
     local attacker      = GetAttacker()
     local attackerType  = GetUnitTypeId(attacker)
     local attacked      = GetTriggerUnit()
@@ -60,12 +58,14 @@ function UnitAbilitiesEvent()
         pcall(function()
             printD("Attempting ability on ground target", debugUnitAbilitiesEvent)
             IssuePointOrderByIdLoc(attacker, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[attackerType]].attackingGround[isBase]), GetUnitLoc(attacked))
+            printD("Issued order against ground target", debugUnitAbilitiesEvent)
         end)
 
         -- Target the unit
         pcall(function()
-            printD("Attempting ability on unit target", debugUnitAbilitiesEvent)
+            printD("Attempting ability on unit target: " .. abilityCastTypeToAbility[abilityUnitTypeToCastType[attackerType]].attackingUnit[isBase], debugUnitAbilitiesEvent)
             IssueTargetOrderById(attacker, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[attackerType]].attackingUnit[isBase]), attacked)
+            printD("Issued order against unit target", debugUnitAbilitiesEvent)
         end)
     end
 
@@ -101,11 +101,13 @@ function UnitAbilitiesEvent()
             pcall(function()
                 printD("Attempting defensive ability on ground target", debugUnitAbilitiesEvent)
                 IssuePointOrderByIdLoc(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)]].allyAttackedGround), GetUnitLoc(attacked))
+                printD("Issued defensive ability on ground target", debugUnitAbilitiesEvent)
             end)
 
             pcall(function()
                 printD("Attempting defensive ability on unit target", debugUnitAbilitiesEvent)
                 IssueTargetOrderById(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)]].allyAttackedUnit), attacked)
+                printD("Issued defensive ability on unit target", debugUnitAbilitiesEvent)
             end)
         end
     end
@@ -113,8 +115,39 @@ end
 
 ----------------------------
 -- Master Sorceress
-function SpawnDjinn()
+function SpawnDjinn(sorc)
+    print("Master Sorceress created")
+
+    local timer = CreateTimer()
+
+    TimerStart(timer, 1, false, function()
+        print("Attemping to spawn djinn")
+        IssueImmediateOrder(sorc, "spiritwolf")
+        DestroyTimer(timer)
+    end)
+end
+
+function SpawningDjinn()
+    local sorc = GetSummoningUnit()
     local djinn = GetSummonedUnit()
+    print("Summoning unit: " .. GetUnitTypeId(sorc) .. " Summoned unit: " .. GetUnitTypeId(djinn))
+    
+    local timer = CreateTimer()
+    TimerStart(timer, 1, false, function()
+        print("Djinn Order: " .. OrderId2String(GetUnitCurrentOrder(djinn)))
+        local loc = GetUnitLoc(djinn)
+        local unitType = GetUnitTypeId(djinn)
+        local owner = GetOwningPlayer(djinn)
+        local face = GetUnitFacing(djinn)
+        RemoveUnit(djinn)
+        KillUnit(sorc)
+        local newDjinn = CreateUnitAtLoc(owner, unitType, loc, face)
+        OrderDjinnDevour(newDjinn)
+        DestroyTimer(timer)
+    end)
+end
+
+function OrderDjinnDevour(djinn)
     local djinnOwnerIndex = GetPlayerId(GetOwningPlayer(djinn))
     local enemyOwner = Player(djinnOwnerIndex + 3)
 
@@ -122,20 +155,39 @@ function SpawnDjinn()
         enemyOwner = Player(djinnOwnerIndex - 3)
     end
 
+    print("Finding enemy children")
     local enemyChildren = GetUnitsOfPlayerMatching(enemyOwner, Condition(function()
         return GetUnitTypeId(GetFilterUnit()) == FourCC("nvlk")
     end))
 
+    print("Picking random child")
     local targetChild = GroupPickRandomUnitCustom(enemyChildren)
 
     if targetChild ~= nil then
-        IssueTargetOrderById(djinn, OrderId("creepdevour"), targetChild)
+        print("Issue attack order for djinn")
+        IssueTargetOrder(djinn, "attack", targetChild)
+        print("Djinn Order: " .. OrderId2String(GetUnitCurrentOrder(djinn)))
+        -- local inRangeTrigger = CreateTrigger()
+        -- TriggerRegisterUnitInRangeSimple(inRangeTrigger, 80, targetChild)
+        -- TriggerAddAction(inRangeTrigger, function()
+        --     local entering = GetEnteringUnit()
+
+        --     if entering == djinn then
+        --         print("Issue devour order for djinn")
+        --         IssueTargetOrder(djinn, "devour", targetChild)
+        --         print("Djinn Order: " .. OrderId2String(GetUnitCurrentOrder(djinn)))
+
+        --         DestroyTrigger(inRangeTrigger)
+        --     end
+        -- end)
     end
 end
 
 function DevourChild()
-    local djinn = GetTriggerUnit()
-    RemoveUnit(djinn)
+    local djinn = GetAttacker()
+    local child = GetTriggerUnit()
+    KillUnit(djinn)
+    RemoveUnit(child)
 end
 
 ----------------------------

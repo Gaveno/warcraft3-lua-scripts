@@ -3,6 +3,8 @@ function InitializeScripts()
 
     InitializeHumanAI()
 
+    debugUnitAbilitiesEvent = true
+
     round = 1
     playerUnitsArray = {}
     playerMilkMaids = {}
@@ -114,6 +116,11 @@ function InitializeScripts()
         [FourCC("h00G:hhou")] = "priest",
         [FourCC("h00H:hhou")] = "priest",
         [FourCC("h00I:hsor")] = "sorceress"
+    }
+
+    -- Spawn Unit Events
+    spawnUnitEvents = {
+        [FourCC("h00J:hsor")] = SpawnDjinn
     }
 
     print("Finished Initialization")

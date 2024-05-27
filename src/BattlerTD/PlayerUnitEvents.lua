@@ -237,13 +237,17 @@ function SpawnPlayersUnits(player)
 
         if unitInfo.active == true then
             spawnUnitType = GetSpawnUnitType(unitInfo.unitType)
+            local unit = nil
 
             if player <= 3 then
-                local unit = CreateUnitAtLoc(Player(6), spawnUnitType, unitInfo.point, 0)
-                -- IssuePointOrder(unit, "attack", 2040, GetLocationY(GetUnitLoc(unit)))
+                unit = CreateUnitAtLoc(Player(6), spawnUnitType, unitInfo.point, 0)
             else 
-                local unit = CreateUnitAtLoc(Player(7), spawnUnitType, unitInfo.point, 180)
-                -- IssuePointOrder(unit, "attack", -2040, GetLocationY(GetUnitLoc(unit)))
+                unit = CreateUnitAtLoc(Player(7), spawnUnitType, unitInfo.point, 180)
+            end
+
+            if spawnUnitEvents[spawnUnitType] ~= nil then
+                print("Spawn unit event triggered")
+                spawnUnitEvents[spawnUnitType](unit)
             end
         end
     end
@@ -252,7 +256,8 @@ end
 function MoveAttackAllUnitsToEnemyBase()
     local units = GetUnitsInRectMatching(GetEntireMapRect(), Condition(function()
         local unit = GetFilterUnit()
-        return (GetOwningPlayer(unit) == Player(6) or GetOwningPlayer(unit) == Player(7)) and GetUnitCurrentOrder(unit) ~= OrderId("attack")
+        -- print("Current unit order: '" .. OrderId2String(GetUnitCurrentOrder(unit)) .. "' ID: " .. GetUnitCurrentOrder(unit))
+        return (GetOwningPlayer(unit) == Player(6) or GetOwningPlayer(unit) == Player(7)) and GetUnitCurrentOrder(unit) == 0
     end))
 
     ForGroup(units, function()
