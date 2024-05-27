@@ -99,7 +99,7 @@ function UnitAbilitiesEvent()
         if abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)] ~= nil then
             -- Defensive skill
             pcall(function()
-                printD("Attempting defensive ability on unit target", debugUnitAbilitiesEvent)
+                printD("Attempting defensive ability on ground target", debugUnitAbilitiesEvent)
                 IssuePointOrderByIdLoc(witchDoc, OrderId(abilityCastTypeToAbility[abilityUnitTypeToCastType[GetUnitTypeId(witchDoc)]].allyAttackedGround), GetUnitLoc(attacked))
             end)
 
@@ -112,7 +112,38 @@ function UnitAbilitiesEvent()
 end
 
 ----------------------------
+-- Master Sorceress
+function SpawnDjinn()
+    local djinn = GetSummonedUnit()
+    local djinnOwnerIndex = GetPlayerId(GetOwningPlayer(djinn))
+    local enemyOwner = Player(djinnOwnerIndex + 3)
+
+    if djinnOwnerIndex >= 3 then
+        enemyOwner = Player(djinnOwnerIndex - 3)
+    end
+
+    local enemyChildren = GetUnitsOfPlayerMatching(enemyOwner, Condition(function()
+        return GetUnitTypeId(GetFilterUnit()) == FourCC("nvlk")
+    end))
+
+    local targetChild = GroupPickRandomUnitCustom(enemyChildren)
+
+    if targetChild ~= nil then
+        IssueTargetOrderById(djinn, OrderId("creepdevour"), targetChild)
+    end
+end
+
+function DevourChild()
+    local djinn = GetTriggerUnit()
+    RemoveUnit(djinn)
+end
+
+----------------------------
 -- Helper Functions
+
+-- Get the lane a y value exists in
+---@param y real
+---@return lane
 function GetLane(y)
     -- Returns lane in range 1-3
     for player = 1,3 do
@@ -121,6 +152,13 @@ function GetLane(y)
         end
     end
     return -1
+end
+
+-- Get the lane a unit exists in
+---@param whichUnit unit
+---@return lane
+function GetLaneByUnit(whichUnit)
+    return GetLane(GetLocationY(GetUnitLoc(whichUnit)))
 end
 
 -- ===========================================================================
