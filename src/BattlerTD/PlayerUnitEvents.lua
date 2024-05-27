@@ -111,10 +111,40 @@ function GetSpawnUnitType(unitType)
         return FourCC("hrif")
     end
 
-    -- Priest check structure
+    -- Novice Priest check structure
     if unitType == FourCC("h005:hhou") then
         -- Spawn attacking unit
         return FourCC("hmpr")
+    end
+
+    -- Adept Priest check structure
+    if unitType == FourCC("h00G:hhou") then
+        -- Spawn attacking unit
+        return FourCC("h00E:hmpr")
+    end
+
+    -- Master Priest check structure
+    if unitType == FourCC("h00H:hhou") then
+        -- Spawn attacking unit
+        return FourCC("h00F:hmpr")
+    end
+
+    -- Novice Sorceress check structure
+    if unitType == FourCC("h00L:hhou") then
+        -- Spawn attacking unit
+        return FourCC("hsor")
+    end
+
+    -- Adept Sorceress check structure
+    if unitType == FourCC("h00M:hhou") then
+        -- Spawn attacking unit
+        return FourCC("h00I:hsor")
+    end
+
+    -- Master Sorceress check structure
+    if unitType == FourCC("h00N:hhou") then
+        -- Spawn attacking unit
+        return FourCC("h00J:hsor")
     end
 
     -- Flying Machine check structure
