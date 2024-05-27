@@ -12,8 +12,8 @@ function ProcessAIOrderForPlayer(playerIndex)
     if debugAIOrder == nil then
         debugAIOrder = false
     end
-    
-    printD("Build order for player " .. playerIndex .. " before " .. playerAIOrders[playerIndex], debugAIOrder)
+
+    printD("Build order for player " .. playerIndex .. ". Starting turn: " .. playerAIOrders[playerIndex] .. ". Type: " .. humanBuildPriorities[playerAIOrders[playerIndex]].type, debugAIOrder)
     -- Base upgrades
     if GetPlayerState(Player(playerIndex - 1), PLAYER_STATE_RESOURCE_GOLD) > 200 and TimerGetRemaining(udg_roundTimer) <= 0 then
         local pick = GetRandomInt(0, 100)
@@ -29,6 +29,7 @@ function ProcessAIOrderForPlayer(playerIndex)
     end
 
     if humanBuildPriorities[playerAIOrders[playerIndex]] == nil then
+        playerIndex = 20
         return
     end
 
@@ -61,7 +62,7 @@ function ProcessAIOrderForPlayer(playerIndex)
 
             foundBuilder = false
             ForGroup(commanderGroup, function()
-                if foundBuilder == false then
+                if foundBuilder == false and GetUnitCurrentOrder(GetEnumUnit()) == 0 then
                     local res = IssueBuildOrderById(
                         GetEnumUnit(),
                         FourCC(humanBuildPriorities[playerAIOrders[playerIndex]].building),
@@ -104,6 +105,8 @@ function ProcessAIOrderForPlayer(playerIndex)
             return
         end
     end
+
+
 end
 
 function IncrementAIOrderEvent(player)

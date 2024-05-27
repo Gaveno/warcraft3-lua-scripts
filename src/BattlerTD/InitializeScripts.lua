@@ -3,7 +3,8 @@ function InitializeScripts()
 
     InitializeHumanAI()
 
-    debugUnitAbilitiesEvent = true
+    debugUnitAbilitiesEvent = false
+    debugAIOrder = false
 
     round = 1
     playerUnitsArray = {}
@@ -97,7 +98,7 @@ function InitializeScripts()
             }
         },
         priest = {
-            attackingUnit = {
+            attackingGround = {
                 [false] = "dispel"
             },
             allyAttackedUnit = "innerfire"
